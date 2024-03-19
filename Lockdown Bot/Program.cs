@@ -1,2 +1,19 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using Microsoft.Extensions.Configuration;
+using DSharpPlus;
+
+
+IConfiguration config = new ConfigurationBuilder()
+    .AddUserSecrets<Configuration>()
+    .Build();
+
+var token = config.GetSection("Token").Value;
+
+
+var discord = new DiscordClient(new DiscordConfiguration() {
+    Token = token,
+    TokenType = TokenType.Bot,
+    Intents = DiscordIntents.Guilds
+});
+
+await discord.ConnectAsync();
+await Task.Delay(-1);
