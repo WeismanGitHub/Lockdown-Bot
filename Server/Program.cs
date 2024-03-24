@@ -4,6 +4,7 @@ using Microsoft.OpenApi.Models;
 //using DSharpPlus.SlashCommands;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Configuration.AddEnvironmentVariables();
 var config = builder.Configuration.Get<Configuration>()!;
 
 builder.Services.AddControllers();
