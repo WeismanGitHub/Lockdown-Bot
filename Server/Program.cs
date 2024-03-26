@@ -1,4 +1,3 @@
-using DSharpPlus;
 using DSharpPlus.SlashCommands;
 using Microsoft.OpenApi.Models;
 

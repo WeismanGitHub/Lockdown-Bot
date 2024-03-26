@@ -1,1 +1,2 @@
-﻿global using Server;
+﻿global using DSharpPlus;
+global using Server;
