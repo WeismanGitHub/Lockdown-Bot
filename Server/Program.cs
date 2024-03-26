@@ -1,6 +1,6 @@
-using DSharpPlus;
 using DSharpPlus.SlashCommands;
 using Microsoft.OpenApi.Models;
+using Server.Events;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddEnvironmentVariables();
@@ -38,14 +38,19 @@ app.MapControllers();
 var discord = new DiscordClient(
     new DiscordConfiguration()
     {
+        MinimumLogLevel = LogLevel.Information,
         Token = config.Token,
         TokenType = TokenType.Bot,
-        Intents = DiscordIntents.Guilds
+        // Add DiscordIntents.MessageContents to read message content
+        Intents = DiscordIntents.Guilds | DiscordIntents.GuildMessages
     }
 );
 
 var slash = discord.UseSlashCommands();
 slash.RegisterCommands<MessageAnalyticsCommands>();
 
+discord.MessageCreated += MessageCreate.Handler;
+
 await discord.ConnectAsync();
+
 app.Run();
