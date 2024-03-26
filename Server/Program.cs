@@ -1,7 +1,6 @@
 using DSharpPlus;
+using DSharpPlus.SlashCommands;
 using Microsoft.OpenApi.Models;
-
-//using DSharpPlus.SlashCommands;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddEnvironmentVariables();
@@ -45,7 +44,8 @@ var discord = new DiscordClient(
     }
 );
 
-//var slash = discord.UseSlashCommands();
+var slash = discord.UseSlashCommands();
+slash.RegisterCommands<MessageAnalyticsCommands>();
 
 await discord.ConnectAsync();
 app.Run();
