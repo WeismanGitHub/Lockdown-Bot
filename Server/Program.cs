@@ -1,5 +1,6 @@
 using DSharpPlus.SlashCommands;
 using Microsoft.OpenApi.Models;
+using Server.Commands;
 using Server.Events;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -52,5 +53,4 @@ slash.RegisterCommands<MessageAnalyticsCommands>();
 discord.MessageCreated += MessageCreate.Handler;
 
 await discord.ConnectAsync();
-
 app.Run();
