@@ -1,6 +1,6 @@
-﻿using DSharpPlus.SlashCommands;
+﻿namespace Server.Commands;
 
-namespace Server.Commands;
+using DSharpPlus.SlashCommands;
 
 public class MessageAnalyticsCommands : ApplicationCommandModule
 {

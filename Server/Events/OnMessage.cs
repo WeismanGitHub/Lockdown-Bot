@@ -1,6 +1,6 @@
-﻿using DSharpPlus.EventArgs;
+﻿namespace Server.Events;
 
-namespace Server.Events;
+using DSharpPlus.EventArgs;
 
 public static class MessageCreate
 {
