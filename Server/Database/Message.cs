@@ -2,7 +2,8 @@
 
 public class Message
 {
-    public string UserId { get; set; }
-    public string MessageId { get; set; }
+    public required string MessageId { get; set; }
+    public required string UserId { get; set; }
+    public required string GuildId { get; set; }
     public DateTime CreatedAt { get; set; }
 }
