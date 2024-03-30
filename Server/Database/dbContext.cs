@@ -5,7 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 public class AnalyticsContext : DbContext
 {
-    public DbSet<Message> Message { get; set; }
+    public DbSet<Message> Messages { get; set; }
+    public DbSet<Guild> Guilds { get; set; }
+    public DbSet<VoiceCall> VoiceCalls { get; set; }
 
     public string DbPath { get; }
 
