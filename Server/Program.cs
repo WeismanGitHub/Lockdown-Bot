@@ -1,7 +1,10 @@
 using DSharpPlus.SlashCommands;
 using Microsoft.OpenApi.Models;
 using Server.Commands;
+using Server.Database;
 using Server.Events;
+
+var services = new ServiceCollection().AddScoped<GuildService>();
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddEnvironmentVariables();
@@ -47,7 +50,9 @@ var discord = new DiscordClient(
     }
 );
 
-var slash = discord.UseSlashCommands();
+var slash = discord.UseSlashCommands(
+    new SlashCommandsConfiguration() { Services = services.BuildServiceProvider() }
+);
 slash.RegisterCommands<MessageAnalyticsCommands>();
 
 discord.MessageCreated += MessageCreate.Handler;
