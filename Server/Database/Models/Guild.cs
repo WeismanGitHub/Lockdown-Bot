@@ -20,6 +20,6 @@ public class Guild
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     [Required]
-    public required ICollection<Message> Messages { get; set; } = [];
-    public required ICollection<VoiceCall> VoiceCalls { get; set; } = [];
+    public ICollection<Message> Messages { get; set; } = [];
+    public ICollection<VoiceCall> VoiceCalls { get; set; } = [];
 }
