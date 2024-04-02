@@ -53,7 +53,9 @@ var discord = new DiscordClient(
 var slash = discord.UseSlashCommands(
     new SlashCommandsConfiguration() { Services = services.BuildServiceProvider() }
 );
+
 slash.RegisterCommands<MessageAnalyticsCommands>();
+slash.RegisterCommands<AdministrationCommands>();
 
 discord.MessageCreated += MessageCreate.Handler;
 
