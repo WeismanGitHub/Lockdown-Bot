@@ -33,10 +33,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseHttpsRedirection();
+app.UseSecurityHeaders(SecurityHeadersPolicy.Create());
+app.UseHsts();
+
 app.MapFallbackToFile("/index.html");
 app.UseStaticFiles();
-app.UseHttpsRedirection();
-app.UseAuthorization();
 app.MapControllers();
 
 var discord = new DiscordClient(
