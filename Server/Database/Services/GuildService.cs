@@ -16,7 +16,7 @@ public class GuildService
         return await _context.Guilds.Where(g => g.GuildId == guildId).SingleOrDefaultAsync();
     }
 
-    public async Task<Guild> UpsertGuild(Guild guild)
+    public async Task UpsertGuild(Guild guild)
     {
         var exists = await _context.Guilds.AnyAsync(g => g.GuildId == guild.GuildId);
 
@@ -24,9 +24,13 @@ public class GuildService
         {
             _context.Guilds.Update(guild);
         }
-    }
+        else
+        {
+            _context.Guilds.Add(guild);
+        }
 
-    //public async Task<UpdateGuildCommand> UpdateGuild(string guildId) { }
+        await _context.SaveChangesAsync();
+    }
 }
 
 //public class RecipeService
