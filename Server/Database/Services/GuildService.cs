@@ -4,12 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 public class GuildService
 {
-    public readonly AnalyticsContext _context;
-
-    public GuildService(AnalyticsContext analyticsContext)
-    {
-        _context = analyticsContext;
-    }
+    public AnalyticsContext _context { get; set; } = new();
 
     public async Task<Guild?> GetGuild(string guildId)
     {
