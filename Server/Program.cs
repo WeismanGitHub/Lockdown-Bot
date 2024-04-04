@@ -4,8 +4,6 @@ using Server.Commands;
 using Server.Database;
 using Server.Events;
 
-var services = new ServiceCollection().AddScoped<GuildService>();
-
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddEnvironmentVariables();
 var config = builder.Configuration.Get<Configuration>()!;
@@ -53,7 +51,10 @@ var discord = new DiscordClient(
 );
 
 var slash = discord.UseSlashCommands(
-    new SlashCommandsConfiguration() { Services = services.BuildServiceProvider() }
+    new SlashCommandsConfiguration()
+    {
+        Services = new ServiceCollection().AddScoped<GuildService>().BuildServiceProvider()
+    }
 );
 
 slash.RegisterCommands<MessageAnalyticsCommands>();
