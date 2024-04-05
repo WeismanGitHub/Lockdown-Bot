@@ -14,7 +14,9 @@ public class Guild
     public required string GuildId { get; set; }
 
     [Required]
-    public required Visibility Visibility { get; set; }
+    public Visibility Visibility { get; set; } = Visibility.Members;
+
+    public string? ViewerRoleId { get; set; }
 
     [Required]
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
