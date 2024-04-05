@@ -1,39 +1,41 @@
 ﻿namespace Server.Commands;
 
-using System.Runtime.InteropServices;
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
+using Server;
 using Server.Database;
 
 public class AdministrationCommands : ApplicationCommandModule
 {
-    public GuildService GuildService { private get; set; } // Implied public setter.
+    public required GuildService GuildService { private get; set; }
 
-    [SlashCommand("settings", "Modify the settings.")]
+    [SlashCommand("settings", "Modify the settings."), GuildOnly]
     public async Task Settings(
         InteractionContext ctx,
-        [Option("Visibility", "Decide who can see server analytics.")] Visibility? visibility = null
+        [Option("Visibility", "Decide who can see server analytics.")]
+            Visibility? visibility = null,
+        [Option("Viewer Role", "Set a viewer role.")] DiscordRole? viewerRole = null
     )
     {
-        Guild? guild;
+        var guildId = ctx.Guild.Id.ToString();
+        Guild guild = await GuildService.GetGuild(guildId) ?? new Guild() { GuildId = guildId };
 
-        if (visibility != null)
+        var changes = visibility != null || viewerRole != null;
+        var hasPermissions =
+            ctx.Guild.OwnerId == ctx.User.Id
+            || ctx.Guild.CurrentMember.Permissions.HasPermission(Permissions.Administrator);
+
+        if (hasPermissions && changes)
         {
-            guild = new Guild()
-            {
-                GuildId = ctx.Guild.Id.ToString(),
-                Visibility = (Visibility)visibility
-            };
+            guild.Visibility = visibility ?? guild.Visibility;
+            guild.ViewerRoleId = viewerRole?.Id.ToString();
 
             await GuildService.UpsertGuild(guild);
         }
-        else
-        {
-            guild = await GuildService.GetGuild(ctx.Guild.Id.ToString());
-        }
 
         await ctx.CreateResponseAsync(
-            new DiscordEmbedBuilder()
+            EmbedUtilities
+                .CreateBuilder()
                 .WithTitle($"Settings for ${ctx.Guild.Name}")
                 .AddField("Visibility", guild?.Visibility.ToString() ?? "Unknown")
         );
