@@ -8,6 +8,7 @@ using Server.Database;
 public class AdministrationCommands : ApplicationCommandModule
 {
     public required GuildService GuildService { private get; set; }
+    public required MessageService MessageService { private get; set; }
 
     [SlashCommand("Settings", "Modify the settings."), GuildOnly]
     public async Task Settings(
@@ -49,5 +50,43 @@ public class AdministrationCommands : ApplicationCommandModule
                 .WithTitle($"Settings for {ctx.Guild.Name}")
                 .AddField("Visibility", guild?.Visibility.ToString() ?? "Unknown")
         );
+    }
+
+    [GuildOnly]
+    [SlashCommand("Index", "Save the messages sent in this server to the database.")]
+    public async Task Index(InteractionContext ctx)
+    {
+        await ctx.DeferAsync();
+
+        foreach (var channel in ctx.Guild.Channels)
+        {
+            if (channel.Value.Type != ChannelType.Text)
+                continue;
+
+            var messages = await channel.Value.GetMessagesAsync();
+
+            if (messages == null)
+                continue;
+
+            while (messages.Count == 100)
+            {
+                await MessageService.InsertMessages(
+                    messages.Select(msg => new Message()
+                    {
+                        Bot = msg.Author.IsBot,
+                        GuildId = ctx.Guild.Id.ToString(),
+                        CreatedAt = msg.CreationTimestamp,
+                        MessageId = msg.Id.ToString(),
+                        TextLength = msg.Content.Length,
+                        UserId = ctx.User.Id.ToString()
+                    })
+                );
+
+                messages = await channel.Value.GetMessagesBeforeAsync(messages.Last().Id);
+                Console.WriteLine(messages.Count);
+            }
+
+            Console.WriteLine(messages.Count + "ahsjdksa");
+        }
     }
 }
