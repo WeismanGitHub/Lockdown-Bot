@@ -8,17 +8,19 @@ public class Message
     public required string MessageId { get; set; }
 
     [Required]
+    public required int TextLength { get; set; }
+
+    [Required]
     public required bool Bot { get; set; }
 
     [Required]
     public required string UserId { get; set; }
 
-    [Required]
-    public required Guild Guild { get; set; }
+    public Guild Guild { get; set; }
 
     [Required]
     public required string GuildId { get; set; }
 
     [Required]
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTimeOffset CreatedAt { get; set; } = DateTime.UtcNow;
 }
