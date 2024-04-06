@@ -8,6 +8,9 @@ public class Message
     public required string MessageId { get; set; }
 
     [Required]
+    public required bool Bot { get; set; }
+
+    [Required]
     public required string UserId { get; set; }
 
     [Required]
