@@ -19,7 +19,6 @@ public class Guild
     public string? ViewerRoleId { get; set; }
 
     public string? AdminRoleId { get; set; }
-    public string? ViewerRoleId { get; set; }
 
     [Required]
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
