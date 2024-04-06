@@ -5,7 +5,8 @@ using System.ComponentModel.DataAnnotations;
 public enum Visibility
 {
     Members,
-    Admins
+    Admins,
+    ViewerRole
 }
 
 public class Guild
