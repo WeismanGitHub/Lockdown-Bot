@@ -4,7 +4,7 @@ using DSharpPlus.SlashCommands;
 
 public class MessageAnalyticsCommands : ApplicationCommandModule
 {
-    [SlashCommand("messages", "Count the total amount of messages.")]
+    [SlashCommand("Messages", "Count the total amount of messages.")]
     public async Task Messages(InteractionContext ctx)
     {
         Console.WriteLine(ctx.Guild.Name);
