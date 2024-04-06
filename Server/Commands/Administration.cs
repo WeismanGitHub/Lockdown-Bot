@@ -4,6 +4,7 @@ using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 using Server;
 using Server.Database;
+using Server.Extensions;
 
 public class AdministrationCommands : ApplicationCommandModule
 {
@@ -64,26 +65,16 @@ public class AdministrationCommands : ApplicationCommandModule
                 continue;
 
             var messages = await channel.Value.GetMessagesAsync();
+            await MessageService.InsertMessages(messages.Convert());
 
             if (messages == null)
                 continue;
 
             while (messages.Count == 100)
             {
-                await MessageService.InsertMessages(
-                    messages.Select(msg => new Message()
-                    {
-                        Bot = msg.Author.IsBot,
-                        GuildId = ctx.Guild.Id.ToString(),
-                        CreatedAt = msg.CreationTimestamp,
-                        MessageId = msg.Id.ToString(),
-                        TextLength = msg.Content.Length,
-                        UserId = ctx.User.Id.ToString()
-                    })
-                );
-
                 messages = await channel.Value.GetMessagesBeforeAsync(messages.Last().Id);
-                Console.WriteLine(messages.Count);
+
+                await MessageService.InsertMessages(messages.Convert());
             }
 
             Console.WriteLine(messages.Count + "ahsjdksa");
