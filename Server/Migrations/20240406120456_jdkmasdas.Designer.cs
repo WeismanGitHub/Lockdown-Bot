@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Server.Database;
 
@@ -10,9 +11,11 @@ using Server.Database;
 namespace Server.Migrations
 {
     [DbContext(typeof(AnalyticsContext))]
-    partial class AnalyticsContextModelSnapshot : ModelSnapshot
+    [Migration("20240406120456_jdkmasdas")]
+    partial class jdkmasdas
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.3");
@@ -47,15 +50,12 @@ namespace Server.Migrations
                     b.Property<bool>("Bot")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTimeOffset>("CreatedAt")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("GuildId")
                         .IsRequired()
                         .HasColumnType("TEXT");
-
-                    b.Property<int>("TextLength")
-                        .HasColumnType("INTEGER");
 
                     b.Property<string>("UserId")
                         .IsRequired()
