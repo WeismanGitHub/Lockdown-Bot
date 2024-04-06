@@ -53,7 +53,10 @@ var discord = new DiscordClient(
 var slash = discord.UseSlashCommands(
     new SlashCommandsConfiguration()
     {
-        Services = new ServiceCollection().AddScoped<GuildService>().BuildServiceProvider()
+        Services = new ServiceCollection()
+            .AddScoped<GuildService>()
+            .AddScoped<MessageService>()
+            .BuildServiceProvider()
     }
 );
 
