@@ -58,8 +58,9 @@ public class AdministrationCommands : ApplicationCommandModule
     public async Task Index(InteractionContext ctx)
     {
         var total = 0;
-        await ctx.CreateResponseAsync(EmbedUtilities.CreateBuilder("This may take a while."));
+
         await ctx.Channel.TriggerTypingAsync();
+        await ctx.CreateResponseAsync(EmbedUtilities.CreateBuilder("This may take a while."));
 
         foreach (var channel in ctx.Guild.Channels)
         {
@@ -79,6 +80,7 @@ public class AdministrationCommands : ApplicationCommandModule
 
                 messages = await channel.Value.GetMessagesBeforeAsync(messages.Last().Id);
                 await MessageService.InsertMessages(messages.Convert());
+
                 total += messages.Count;
             }
         }
