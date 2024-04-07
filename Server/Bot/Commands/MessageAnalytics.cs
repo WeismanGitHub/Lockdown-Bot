@@ -1,4 +1,4 @@
-﻿namespace Server.Commands;
+﻿namespace Server.Bot.Commands;
 
 using DSharpPlus.SlashCommands;
 

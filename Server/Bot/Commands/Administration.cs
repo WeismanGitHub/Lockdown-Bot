@@ -1,8 +1,8 @@
-﻿namespace Server.Commands;
+﻿namespace Server.Bot.Commands;
 
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
-using Server;
+using Server.Bot;
 using Server.Database;
 using Server.Extensions;
 

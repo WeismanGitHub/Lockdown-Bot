@@ -1,4 +1,4 @@
-﻿namespace Server;
+﻿namespace Server.Api;
 
 public static class SecurityHeadersPolicy
 {

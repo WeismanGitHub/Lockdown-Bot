@@ -1,4 +1,4 @@
-﻿namespace Server.Events;
+﻿namespace Server.Bot.Events;
 
 using DSharpPlus.SlashCommands;
 using DSharpPlus.SlashCommands.EventArgs;

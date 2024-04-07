@@ -1,6 +1,6 @@
 ﻿using DSharpPlus.Entities;
 
-namespace Server;
+namespace Server.Bot;
 
 public static class EmbedUtilities
 {

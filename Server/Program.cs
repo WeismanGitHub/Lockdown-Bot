@@ -1,9 +1,10 @@
 using DSharpPlus.SlashCommands;
 using DSharpPlus.SlashCommands.EventArgs;
 using Microsoft.OpenApi.Models;
-using Server.Commands;
+using Server.Api;
+using Server.Bot.Commands;
+using Server.Bot.Events;
 using Server.Database;
-using Server.Events;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddEnvironmentVariables();
