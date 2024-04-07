@@ -47,9 +47,9 @@ public class AdministrationCommands : ApplicationCommandModule
 
         await ctx.CreateResponseAsync(
             EmbedUtilities
-                .CreateBuilder()
-                .WithTitle($"Settings for {ctx.Guild.Name}")
-                .AddField("Visibility", guild?.Visibility.ToString() ?? "Unknown")
+                .CreateBuilder($"Settings for {ctx.Guild.Name}")
+                .AddField("Visibility", guild?.Visibility.ToString() ?? "Unknown"),
+            true
         );
     }
 
@@ -57,7 +57,9 @@ public class AdministrationCommands : ApplicationCommandModule
     [SlashCommand("Index", "Save the messages sent in this server to the database.")]
     public async Task Index(InteractionContext ctx)
     {
-        await ctx.DeferAsync();
+        var total = 0;
+        await ctx.CreateResponseAsync(EmbedUtilities.CreateBuilder("This may take a while."));
+        await ctx.Channel.TriggerTypingAsync();
 
         foreach (var channel in ctx.Guild.Channels)
         {
@@ -66,18 +68,28 @@ public class AdministrationCommands : ApplicationCommandModule
 
             var messages = await channel.Value.GetMessagesAsync();
             await MessageService.InsertMessages(messages.Convert());
+            total += messages.Count;
 
             if (messages == null)
                 continue;
 
             while (messages.Count == 100)
             {
+                await ctx.Channel.TriggerTypingAsync();
+
                 messages = await channel.Value.GetMessagesBeforeAsync(messages.Last().Id);
-
                 await MessageService.InsertMessages(messages.Convert());
+                total += messages.Count;
             }
-
-            Console.WriteLine(messages.Count + "ahsjdksa");
         }
+
+        await ctx.EditResponseAsync(
+            new DiscordWebhookBuilder().AddEmbed(
+                EmbedUtilities.CreateBuilder(
+                    "Finished indexing this server!",
+                    $"Indexed {total} messages."
+                )
+            )
+        );
     }
 }
