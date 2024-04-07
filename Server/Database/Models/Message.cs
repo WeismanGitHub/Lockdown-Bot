@@ -11,6 +11,9 @@ public class Message
     public required int TextLength { get; set; }
 
     [Required]
+    public required string ChannelId { get; set; }
+
+    [Required]
     public required bool Bot { get; set; }
 
     [Required]
@@ -22,5 +25,5 @@ public class Message
     public required string GuildId { get; set; }
 
     [Required]
-    public DateTimeOffset CreatedAt { get; set; } = DateTime.UtcNow;
+    public DateTimeOffset CreatedAt { get; set; }
 }
