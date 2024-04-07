@@ -64,7 +64,7 @@ var slash = discord.UseSlashCommands(
 slash.RegisterCommands<MessageAnalyticsCommands>();
 slash.RegisterCommands<AdministrationCommands>();
 
-discord.MessageCreated += MessageCreate.Handler;
+discord.MessageCreated += MessageCreated.Handler;
 slash.SlashCommandErrored += SlashCommandErrored.Handler;
 
 await discord.ConnectAsync();

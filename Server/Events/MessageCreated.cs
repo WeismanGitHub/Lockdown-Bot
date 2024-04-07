@@ -2,7 +2,7 @@
 
 using DSharpPlus.EventArgs;
 
-public static class MessageCreate
+public static class MessageCreated
 {
     public static async Task Handler(DiscordClient _, MessageCreateEventArgs e)
     {
