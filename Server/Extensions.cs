@@ -9,6 +9,7 @@ public static class Extensions
     {
         return messages.Select(msg => new Message()
         {
+            ChannelId = msg.ChannelId.ToString(),
             Bot = msg.Author.IsBot,
             GuildId = msg.Channel.Guild.Id.ToString(),
             CreatedAt = msg.CreationTimestamp,
