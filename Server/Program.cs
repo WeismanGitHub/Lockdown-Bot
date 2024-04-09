@@ -3,7 +3,6 @@ using Microsoft.OpenApi.Models;
 using Server.Api;
 using Server.Bot;
 using Server.Bot.Commands;
-using Server.Bot.Events;
 using Server.Database;
 
 var builder = WebApplication.CreateBuilder(args);
