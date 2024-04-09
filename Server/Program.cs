@@ -61,9 +61,6 @@ var slash = client.UseSlashCommands(
     }
 );
 
-slash.RegisterCommands<MessageAnalyticsCommands>();
-slash.RegisterCommands<AdministrationCommands>();
-
 new ClientUtilities(slash, client).RegisterCommands().RegisterEvents();
 
 await client.ConnectAsync();
