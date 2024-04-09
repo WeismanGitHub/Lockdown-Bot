@@ -1,7 +1,7 @@
 using DSharpPlus.SlashCommands;
-using DSharpPlus.SlashCommands.EventArgs;
 using Microsoft.OpenApi.Models;
 using Server.Api;
+using Server.Bot;
 using Server.Bot.Commands;
 using Server.Bot.Events;
 using Server.Database;
@@ -41,7 +41,7 @@ app.MapFallbackToFile("/index.html");
 app.UseStaticFiles();
 app.MapControllers();
 
-var discord = new DiscordClient(
+var client = new DiscordClient(
     new DiscordConfiguration()
     {
         MinimumLogLevel = LogLevel.Information,
@@ -52,7 +52,7 @@ var discord = new DiscordClient(
     }
 );
 
-var slash = discord.UseSlashCommands(
+var slash = client.UseSlashCommands(
     new SlashCommandsConfiguration()
     {
         Services = new ServiceCollection()
@@ -65,8 +65,7 @@ var slash = discord.UseSlashCommands(
 slash.RegisterCommands<MessageAnalyticsCommands>();
 slash.RegisterCommands<AdministrationCommands>();
 
-discord.MessageCreated += MessageCreated.Handler;
-slash.SlashCommandErrored += SlashCommandErrored.Handler;
+new ClientUtilities(slash, client).RegisterCommands().RegisterEvents();
 
-await discord.ConnectAsync();
+await client.ConnectAsync();
 app.Run();
