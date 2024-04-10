@@ -15,11 +15,11 @@ public static class EmbedUtilities
             .WithDescription(description);
     }
 
-    public static DiscordEmbedBuilder CreateErrorEmbed(string? description)
+    public static DiscordEmbedBuilder CreateErrorEmbed(Exception e)
     {
         return new DiscordEmbedBuilder()
             .WithColor(Red)
             .WithTitle("An Error Occurred!")
-            .WithDescription(description);
+            .WithDescription(e.Message);
     }
 }
