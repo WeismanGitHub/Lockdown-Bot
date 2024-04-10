@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using System.Reflection.Metadata.Ecma335;
 using DSharpPlus.SlashCommands;
 using Server.Bot.Events;
 
@@ -36,6 +35,7 @@ public class ClientUtilities
     {
         client.MessageCreated += MessageCreated.Handler;
         slash.SlashCommandErrored += SlashCommandErrored.Handler;
+        client.ClientErrored += ClientErrored.Handler;
 
         return this;
     }
