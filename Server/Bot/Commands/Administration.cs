@@ -39,10 +39,7 @@ public class AdministrationCommands : ApplicationCommandModule
 
         if (guild == null)
         {
-            await ctx.CreateResponseAsync(
-                EmbedUtilities.CreateErrorEmbed("This server has not been set up yet.")
-            );
-            return;
+            throw new Exception("This server hasn't been set up.");
         }
 
         await ctx.CreateResponseAsync(
