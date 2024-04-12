@@ -9,10 +9,14 @@ public static class EmbedUtilities
 
     public static DiscordEmbedBuilder CreateBuilder(string? title, string? description = null)
     {
-        return new DiscordEmbedBuilder()
-            .WithColor(White)
-            .WithTitle(title)
-            .WithDescription(description);
+        var embed = new DiscordEmbedBuilder().WithColor(White);
+
+        if (title != null)
+            embed.Title = title;
+        if (description != null)
+            embed.Description = description;
+
+        return embed;
     }
 
     public static DiscordEmbedBuilder CreateErrorEmbed(Exception e)
