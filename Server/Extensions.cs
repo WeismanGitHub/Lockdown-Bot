@@ -5,17 +5,26 @@ using Server.Database;
 
 public static class Extensions
 {
-    public static IEnumerable<Message> Convert(this IEnumerable<DiscordMessage> messages)
+    public static Message Convert(this DiscordMessage message)
     {
-        return messages.Select(msg => new Message()
+        if (message?.Channel?.Guild is null)
         {
-            ChannelId = msg.ChannelId.ToString(),
-            Bot = msg.Author.IsBot,
-            GuildId = msg.Channel.Guild.Id.ToString(),
-            CreatedAt = msg.CreationTimestamp,
-            MessageId = msg.Id.ToString(),
-            TextLength = msg.Content.Length,
-            UserId = msg.Author.Id.ToString()
-        });
+            throw new Exception("Message must be from a server.");
+        }
+        else if (message?.Author is null)
+        {
+            throw new Exception("Message must have an author");
+        }
+
+        return new Message()
+        {
+            ChannelId = message.ChannelId.ToString(),
+            Bot = message.Author.IsBot,
+            GuildId = message.Channel.Guild.Id.ToString(),
+            CreatedAt = message.CreationTimestamp,
+            MessageId = message.Id.ToString(),
+            TextLength = message.Content.Length,
+            UserId = message.Author.Id.ToString()
+        };
     }
 }
