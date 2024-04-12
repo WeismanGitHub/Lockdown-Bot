@@ -4,6 +4,12 @@ public class MessageService
 {
     public AnalyticsContext _context { get; set; } = new();
 
+    public async Task InsertMessages(IEnumerable<Message> message)
+    {
+        _context.Messages.BulkInsert(message);
+        await _context.SaveChangesAsync();
+    }
+
     public async Task InsertMessage(Message message)
     {
         _context.Messages.Add(message);
