@@ -2,7 +2,6 @@ using DSharpPlus.SlashCommands;
 using Microsoft.OpenApi.Models;
 using Server.Api;
 using Server.Bot;
-using Server.Bot.Commands;
 using Server.Database;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -4,7 +4,6 @@ using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 using Server.Bot;
 using Server.Database;
-using Server.Extensions;
 
 public class AdministrationCommands : ApplicationCommandModule
 {
