@@ -54,41 +54,49 @@ public class AdministrationCommands : ApplicationCommandModule
     [SlashCommand("Index", "Save the messages sent in this server to the database.")]
     public async Task Index(InteractionContext ctx)
     {
-        var total = 0;
-
-        await ctx.Channel.TriggerTypingAsync();
-        await ctx.CreateResponseAsync(EmbedUtilities.CreateBuilder("This may take a while."));
-
-        foreach (var channel in ctx.Guild.Channels)
-        {
-            if (channel.Value.Type != ChannelType.Text)
-                continue;
-
-            var messages = await channel.Value.GetMessagesAsync();
-            await MessageService.InsertMessages(messages.Convert());
-            total += messages.Count;
-
-            if (messages == null)
-                continue;
-
-            while (messages.Count == 100)
-            {
-                await ctx.Channel.TriggerTypingAsync();
-
-                messages = await channel.Value.GetMessagesBeforeAsync(messages.Last().Id);
-                await MessageService.InsertMessages(messages.Convert());
-
-                total += messages.Count;
-            }
-        }
-
-        await ctx.EditResponseAsync(
-            new DiscordWebhookBuilder().AddEmbed(
-                EmbedUtilities.CreateBuilder(
-                    "Finished indexing this server!",
-                    $"Indexed {total} messages."
-                )
-            )
+        throw new NotImplementedException(
+            "This command hasn't been implemented. It may never be implemented."
         );
+        //var total = 0;
+
+        //await ctx.Channel.TriggerTypingAsync();
+        //await ctx.CreateResponseAsync(EmbedUtilities.CreateBuilder("This may take a while."));
+
+        //foreach (var channel in ctx.Guild.Channels)
+        //{
+        //    if (channel.Value.Type != ChannelType.Text)
+        //        continue;
+
+        //    var messages = channel.Value.GetMessagesAsync(int.MaxValue);
+
+        //    await foreach (var message in messages)
+        //    {
+        //        Console.WriteLine(message.Content);
+        //    }
+        //    //await MessageService.InsertMessages(messages.Convert());
+        //    //total += messages.Count;
+
+        //    //if (messages == null)
+        //    //    continue;
+
+        //    //while (messages.Count == 100)
+        //    //{
+        //    //    await ctx.Channel.TriggerTypingAsync();
+
+        //    //    messages = await channel.Value.GetMessagesBeforeAsync(messages.Last().Id);
+        //    //    await MessageService.InsertMessages(messages.Convert());
+
+        //    //    total += messages.Count;
+        //    //}
+        //}
+
+        //await ctx.EditResponseAsync(
+        //    new DiscordWebhookBuilder().AddEmbed(
+        //        EmbedUtilities.CreateBuilder(
+        //            "Finished indexing this server!",
+        //            $"Indexed {total} messages."
+        //        )
+        //    )
+        //);
     }
 }
