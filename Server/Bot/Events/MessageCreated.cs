@@ -17,6 +17,6 @@ public static class MessageCreated
 
         var messageService = new MessageService();
 
-        await messageService.InsertMessage(e.Message.Convert());
+        await messageService.SaveMessage(e.Message.Convert());
     }
 }

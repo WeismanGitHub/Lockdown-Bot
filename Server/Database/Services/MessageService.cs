@@ -10,7 +10,7 @@ public class MessageService
         await _context.SaveChangesAsync();
     }
 
-    public async Task InsertMessage(Message message)
+    public async Task SaveMessage(Message message)
     {
         _context.Messages.Add(message);
         await _context.SaveChangesAsync();
