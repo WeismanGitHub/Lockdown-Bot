@@ -2,9 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Server.Api.Controllers;
 
-[ApiController]
-[Route("[controller]")]
-public class WeatherForecastController : ControllerBase
+public class AnalyticsController : CustomBase
 {
     [HttpGet(Name = "test")]
     public string Test()
