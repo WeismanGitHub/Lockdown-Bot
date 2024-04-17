@@ -44,7 +44,11 @@ public class AdministrationCommands : ApplicationCommandModule
         await ctx.CreateResponseAsync(
             EmbedUtilities
                 .CreateBuilder($"Settings for {ctx.Guild.Name}")
-                .AddField("Visibility", guild?.Visibility.ToString() ?? "Unknown"),
+                .AddField("Visibility", guild?.Visibility.ToString() ?? "Unknown")
+                .AddField(
+                    "Viewer Role",
+                    guild?.ViewerRoleId == null ? "null" : $"<@&{guild?.ViewerRoleId}>"
+                ),
             true
         );
     }
