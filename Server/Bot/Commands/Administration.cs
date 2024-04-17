@@ -5,6 +5,11 @@ using DSharpPlus.SlashCommands;
 using Server.Bot;
 using Server.Database;
 
+public enum Roles
+{
+    ViewerRole
+}
+
 public class AdministrationCommands : ApplicationCommandModule
 {
     public required GuildService GuildService { private get; set; }
@@ -15,13 +20,14 @@ public class AdministrationCommands : ApplicationCommandModule
         InteractionContext ctx,
         [Option("Visibility", "Decide who can see server analytics.")]
             Visibility? visibility = null,
-        [Option("Viewer-Role", "Set a viewer role.")] DiscordRole? viewerRole = null
+        [Option("Viewer-Role", "Set a viewer role.")] DiscordRole? viewerRole = null,
+        [Option("Clear-Role", "Clear a role in the database.")] Roles? clearRole = null
     )
     {
         var guildId = ctx.Guild.Id.ToString();
         var guild = await GuildService.GetGuild(guildId);
 
-        var changes = visibility != null || viewerRole != null;
+        var changes = visibility != null || viewerRole != null || clearRole != null;
         var hasPermissions =
             ctx.Guild.OwnerId == ctx.User.Id
             || ctx.Guild.CurrentMember.Permissions.HasPermission(Permissions.Administrator);
@@ -32,6 +38,11 @@ public class AdministrationCommands : ApplicationCommandModule
 
             guild.Visibility = visibility ?? guild.Visibility;
             guild.ViewerRoleId = viewerRole?.Id.ToString();
+
+            if (clearRole == Roles.ViewerRole)
+            {
+                guild.ViewerRoleId = null;
+            }
 
             await GuildService.UpsertGuild(guild);
         }
